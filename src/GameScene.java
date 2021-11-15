@@ -60,7 +60,7 @@ public class GameScene extends Scene{
         numberOfLives=3;
 
         //starting background
-        start=new StaticThing(0,0,"black.png",0,0,600,400);
+        start=new StaticThing(0,0,"startScreen.png",0,0,600,400);
         root.getChildren().add(start.getSprite());
 
         //Button

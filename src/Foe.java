@@ -12,10 +12,10 @@ public class Foe extends MovingThing {
 
     }
 
-    //the same foe is used, just displaced on the x-axis and replaced on ground level
+    //the same foe is used, just displaced on the x-axis
     public void addX(int i){
         this.x=x+i;
-        this.y=210;
+        this.y=210; //replaced on ground level
     }
 
     public void addY(int i){
