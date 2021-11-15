@@ -85,7 +85,7 @@ public class GameScene extends Scene{
 
                     //the foe is displaced on the x-axis when it is outside the screen
                     if (foe.getX() < hero.getX() - 800) {
-                        foe.addX(2000);
+                        foe.addX(1500);
                     }
                     //the hero stays in that loop while going through an enemy
                     if (!isInvincible && hero.getHitBox().intersects(foe.getHitBox())) {
