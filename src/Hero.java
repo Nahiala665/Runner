@@ -37,26 +37,32 @@ public class Hero extends MovingThing{
     }
 
     public void update(){
-        double elapsedTime=0.016;  ////fixed update at 16ms (60Hz)
+        double elapsedTime=0.016;  //fixed update at 16ms (60Hz)
         ax=10;
         vx=vx+elapsedTime*ax;
         x=x+elapsedTime*vx;
         vy=vy+elapsedTime*ay;
         y=y+elapsedTime*vy;
-        if (y>=250) { //maintain the hero on ground level
+
+        //maintain the hero on ground level
+        if (y>=250) {
             y=250;
             vy=0;
         }
-        if (vy<0) { //hero is jumping up
+        //hero is jumping up
+        if (vy<0) {
             super.getSprite().setViewport(new Rectangle2D(20,160,70,110));
         }
-        if (vy>0){ //hero is falling down
+        //hero is falling down
+        if (vy>0){
             super.getSprite().setViewport(new Rectangle2D(90,160,80,110));
         }
-        if (y<250){ //if the hero is jumping, then the gravity will affect him
+        //if the hero is jumping, then the gravity will affect him
+        if (y<250){
             ay=3000;
         }
-        if (vy==0 && y==250) { //the hero is running
+        //the hero is running
+        if (vy==0 && y==250) {
             index++;
             super.getSprite().setViewport(new Rectangle2D(8 + (index/5)%6 * 83, 0, 78, 100));
         }
