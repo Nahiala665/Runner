@@ -5,9 +5,15 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -27,6 +33,8 @@ public class GameScene extends Scene{
     private boolean isInvincibleBonus;
     private StaticThing background;
     private StaticThing start;
+    private Text points;
+    private Text score;
 
     private AnimationTimer timer;
 
@@ -78,6 +86,14 @@ public class GameScene extends Scene{
         btn.setPrefSize(150, 50);
         root.getChildren().add(btn);
 
+        //Points
+        points = new Text();
+        points.setText("points:"+hero.getX());
+        points.setX(460);
+        points.setY(20);
+        points.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        root.getChildren().add(points);
+
         //camera
         camera=new Camera(0,0,hero);
 
@@ -114,7 +130,9 @@ public class GameScene extends Scene{
                             isInvincible=false;
                     }
 
+
                     //COLLISION WITH BONUS
+                    //the hero stays in that loop while going through a bonus
                     if (!isInvincibleBonus && hero.getHitBox().intersects(Bonus.getHitBox())) {
                         numberOfLives = numberOfLives + 1;
                         isInvincibleBonus = true;
@@ -124,20 +142,34 @@ public class GameScene extends Scene{
                     else if (isInvincibleBonus && !hero.getHitBox().intersects(Bonus.getHitBox())){
                         isInvincibleBonus=false;
                     }
-
+                    //can't get more than 3 lives
                     if(numberOfLives>3){
                         numberOfLives=3;
                     }
 
-                    //game over screen
+                    //GAME OVER
                     if (numberOfLives==0){
                         background=new StaticThing(0,0,"GameOver.png",50,0,712,401);
                         root.getChildren().add(background.getSprite());
+
+                        // FINAL SCORE DISPLAY
+                        score = new Text();
+                        score.setText("score:"+Math.ceil(hero.getX()/100));
+                        score.setX(460);
+                        score.setY(20);
+                        score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+                        score.setFill(Color.WHITE);
+                        root.getChildren().add(score);
+
                         timer.stop();
                     }
 
                     //lives display
                     lives.getSprite().setViewport(new Rectangle2D(31, 19+(3-numberOfLives)*42, 122, 36));
+
+                    //update of points
+                    points.setText("points:"+Math.ceil(hero.getX()/100));
+
 
                 }
                 camera.update();

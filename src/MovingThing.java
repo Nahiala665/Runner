@@ -13,6 +13,7 @@ public abstract class MovingThing {
         return sprite;
     }
 
+
     public double getX() {
         return x;
     }
