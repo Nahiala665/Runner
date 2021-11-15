@@ -20,9 +20,11 @@ public class GameScene extends Scene{
     private StaticThing planetRight;
     private Hero hero;
     private Foe foe;
+    private bonus Bonus;
     private StaticThing lives;
     private Integer numberOfLives;
     private boolean isInvincible;
+    private boolean isInvincibleBonus;
     private StaticThing background;
     private StaticThing start;
 
@@ -34,6 +36,8 @@ public class GameScene extends Scene{
         hero.getSprite().setY(hero.getY()-camera.getY());
         foe.getSprite().setX(foe.getX()-camera.getX());
         foe.getSprite().setY((foe.getY()-camera.getY()));
+        Bonus.getSprite().setX(Bonus.getX()-camera.getX());
+        Bonus.getSprite().setY(Bonus.getY()-camera.getY());
         planetLeft.getSprite().setX(0-offset);
         planetRight.getSprite().setX(712-offset);
     }
@@ -59,6 +63,10 @@ public class GameScene extends Scene{
         root.getChildren().add(lives.getSprite());
         numberOfLives=3;
 
+        //bonus
+        Bonus=new bonus();
+        root.getChildren().add(Bonus.getSprite());
+
         //starting background
         start=new StaticThing(0,0,"startScreen.png",0,0,600,400);
         root.getChildren().add(start.getSprite());
@@ -81,12 +89,20 @@ public class GameScene extends Scene{
                 if (l-lastTime>0.016*1_000_000_000) {  //fixed update at 16ms (60Hz)
                     hero.update();
                     foe.update();
+                    Bonus.update();
                     lastTime = l;
 
                     //the foe is displaced on the x-axis when it is outside the screen
                     if (foe.getX() < hero.getX() - 800) {
                         foe.addX(1500);
                     }
+
+                    //the bonus is displaced on the x-axis when it is outside the screen
+                    if (Bonus.getX() < hero.getX() - 800) {
+                        Bonus.addX(6850);
+                    }
+
+                    //COLLISION WITH FOE
                     //the hero stays in that loop while going through an enemy
                     if (!isInvincible && hero.getHitBox().intersects(foe.getHitBox())) {
                             numberOfLives = numberOfLives - 1;
@@ -96,6 +112,21 @@ public class GameScene extends Scene{
                     //when not touching a foe, the hero loses its invincibility
                     else if (isInvincible && !hero.getHitBox().intersects(foe.getHitBox())){
                             isInvincible=false;
+                    }
+
+                    //COLLISION WITH BONUS
+                    if (!isInvincibleBonus && hero.getHitBox().intersects(Bonus.getHitBox())) {
+                        numberOfLives = numberOfLives + 1;
+                        isInvincibleBonus = true;
+                        Bonus.addY(2000); //the bonus is removed
+                    }
+                    //when not touching a bonus, the hero loses its invincibility
+                    else if (isInvincibleBonus && !hero.getHitBox().intersects(Bonus.getHitBox())){
+                        isInvincibleBonus=false;
+                    }
+
+                    if(numberOfLives>3){
+                        numberOfLives=3;
                     }
 
                     //game over screen
