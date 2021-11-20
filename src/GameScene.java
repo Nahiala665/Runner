@@ -39,13 +39,18 @@ public class GameScene extends Scene{
     private AnimationTimer timer;
 
     public void render(){
+
         double offset = camera.getX()%712;
+
         hero.getSprite().setX(hero.getX()-camera.getX());
         hero.getSprite().setY(hero.getY()-camera.getY());
+
         foe.getSprite().setX(foe.getX()-camera.getX());
         foe.getSprite().setY((foe.getY()-camera.getY()));
+
         Bonus.getSprite().setX(Bonus.getX()-camera.getX());
         Bonus.getSprite().setY(Bonus.getY()-camera.getY());
+
         planetLeft.getSprite().setX(0-offset);
         planetRight.getSprite().setX(712-offset);
     }
@@ -69,7 +74,7 @@ public class GameScene extends Scene{
         //lives
         lives=new StaticThing(20,20,"Lives.png",31,19,122,34);
         root.getChildren().add(lives.getSprite());
-        numberOfLives=3;
+        numberOfLives=3; //the player has 3 lives
 
         //bonus
         Bonus=new bonus();
@@ -147,28 +152,30 @@ public class GameScene extends Scene{
                         numberOfLives=3;
                     }
 
+
+                    //lives display
+                    lives.getSprite().setViewport(new Rectangle2D(31, 19+(3-numberOfLives)*42, 122, 36));
+
+                    //update of points
+                    points.setText("points:"+Math.ceil(hero.getX()/100)); //integer value of the coordinate x (divided by 100 vor readability)
+
+
                     //GAME OVER
-                    if (numberOfLives==0){
+                    if (numberOfLives==0){ //no lives left
                         background=new StaticThing(0,0,"GameOver.png",50,0,712,401);
-                        root.getChildren().add(background.getSprite());
+                        root.getChildren().add(background.getSprite());  //display the GAME OVER screen
 
                         // FINAL SCORE DISPLAY
                         score = new Text();
                         score.setText("score:"+Math.ceil(hero.getX()/100));
                         score.setX(460);
                         score.setY(20);
-                        score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+                        score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20)); //displays the last value of x before the hero died
                         score.setFill(Color.WHITE);
                         root.getChildren().add(score);
 
                         timer.stop();
                     }
-
-                    //lives display
-                    lives.getSprite().setViewport(new Rectangle2D(31, 19+(3-numberOfLives)*42, 122, 36));
-
-                    //update of points
-                    points.setText("points:"+Math.ceil(hero.getX()/100));
 
 
                 }
@@ -186,7 +193,6 @@ public class GameScene extends Scene{
                 root.getChildren().remove(start.getSprite());
             }
         };
-
         // when start button is pressed
         btn.setOnAction(event);
 
