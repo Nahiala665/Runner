@@ -86,7 +86,7 @@ public class GameScene extends Scene{
         btn.setPrefSize(150, 50);
         root.getChildren().add(btn);
 
-        //Points
+        //display of the points
         points = new Text();
         points.setText("points:"+hero.getX());
         points.setX(460);
@@ -108,12 +108,12 @@ public class GameScene extends Scene{
                     Bonus.update();
                     lastTime = l;
 
-                    //the foe is displaced on the x-axis when it is outside the screen
+                    //the foe is displaced on the x-axis when it gets outside the screen
                     if (foe.getX() < hero.getX() - 800) {
                         foe.addX(1500);
                     }
 
-                    //the bonus is displaced on the x-axis when it is outside the screen
+                    //the bonus is displaced on the x-axis when it gets outside the screen
                     if (Bonus.getX() < hero.getX() - 800) {
                         Bonus.addX(6850);
                     }
@@ -187,7 +187,7 @@ public class GameScene extends Scene{
             }
         };
 
-        // when button is pressed
+        // when start button is pressed
         btn.setOnAction(event);
 
 
