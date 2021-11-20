@@ -5,23 +5,16 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 public class GameScene extends Scene{
-    private Button btn;
     private Camera camera;
-    private ImageView Sprite;
     private StaticThing planetLeft;
     private StaticThing planetRight;
     private Hero hero;
